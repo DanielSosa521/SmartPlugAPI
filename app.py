@@ -21,10 +21,10 @@ class Home(Resource):
         currentMonth = datetime.now().month
         month = calendar.month_name[currentMonth]
         summary = "Energy usage looks good"
-        moneysaved = 500
-        powersaved = 2300
+        moneysaved = random.randint(-200,200)
+        powersaved = moneysaved * 27
         savings = "$"+str(moneysaved)+" : "+str(powersaved)+"KWH"
-        delta = 10
+        delta = random.randint(-15,20)
         plugs = ["plug1","plug2","plug4"]
         return {
             'month':month,
