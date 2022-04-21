@@ -68,5 +68,21 @@ class DashboardDay(Resource):
 
 api.add_resource(DashboardDay, "/dashboard/day")
 
+class DashboardPlugs(Resource):
+    def get(self):
+        print("Providing plug data\n")
+        plugCount = 4                           #Hardcoding 4 plugs for testing
+        points = []
+        for plug in range(plugCount):
+            plugPower = random.randint(0,15)        #Each plug = random power from 0 to 15
+            points.append(plug)
+            points.append(plugPower)
+        print(points)
+        return {
+            'points' : points
+        }
+
+api.add_resource(DashboardPlugs, "/dashboard/plugs")
+
 if __name__ == "__main__":
     app.run(debug=True)
