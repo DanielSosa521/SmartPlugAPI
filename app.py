@@ -2,6 +2,7 @@ __author__ = "Daniel Sosa"
 __date__ = "April 14, 2022"
 
 from datetime import datetime
+from pymongo import mongo_client
 import calendar
 import random
 
