@@ -10,13 +10,14 @@ from pymongo import MongoClient
 #Without it, SSL CERTIFICATE VERIFY FAILED EXCEPTION
 #Should find a better solution but i got fed up lol
 import certifi
+import database
 
 from flask import Flask, jsonify
 from flask_restful import Api, Resource
 app = Flask(__name__)
 api = Api(app)
 
-CONNECTION_STRING = "mongodb+srv://smartplugadmin:DvEBgFQKbIpdx2XZ@cluster0.gu6op.mongodb.net/SmartPlugDatabase?retryWrites=true&w=majority"
+CONNECTION_STRING = database.getConnectionString()
 client = MongoClient(CONNECTION_STRING, tlsCAFile=certifi.where())
 
 db = client.SmartPlugDatabase
