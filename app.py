@@ -2,20 +2,27 @@ __author__ = "Daniel Sosa"
 __date__ = "April 14, 2022"
 
 from datetime import datetime
-from pymongo import mongo_client
 import calendar
 import random
+from pymongo import MongoClient
+
+#NOTE : Need this package for MongoClient init
+#Without it, SSL CERTIFICATE VERIFY FAILED EXCEPTION
+#Should find a better solution but i got fed up lol
+import certifi
 
 from flask import Flask, jsonify
 from flask_restful import Api, Resource
 app = Flask(__name__)
 api = Api(app)
 
-class HelloWorld(Resource):
-    def get(self):
-        return {"data":"Hello World"}
+CONNECTION_STRING = "mongodb+srv://smartplugadmin:DvEBgFQKbIpdx2XZ@cluster0.gu6op.mongodb.net/SmartPlugDatabase?retryWrites=true&w=majority"
+client = MongoClient(CONNECTION_STRING, tlsCAFile=certifi.where())
 
-api.add_resource(HelloWorld, "/helloworld")
+db = client.SmartPlugDatabase
+users = db.users
+plugs = db.plugs
+
 
 class Home(Resource):
     def get(self):
@@ -84,6 +91,21 @@ class DashboardPlugs(Resource):
         }
 
 api.add_resource(DashboardPlugs, "/dashboard/plugs")
+
+class Database(Resource):
+    def get(self):
+        print("Displaying database information")
+        print ("Collections:\n")
+        collections = []
+        for c in db.list_collection_names():
+            collections.append(c)                       #Add collection name to list
+            # coll = db[c]      //access that collection
+            
+        return {
+            'collections' : collections
+        }
+        
+api.add_resource(Database, "/database")
 
 if __name__ == "__main__":
     app.run(debug=True)
