@@ -108,5 +108,27 @@ class Database(Resource):
         
 api.add_resource(Database, "/database")
 
+class Register(Resource):
+    def post(self, email, username, password, confpassword):
+        print(email)
+        print(username)
+        print(password)
+        print(confpassword)
+        return {
+            'status' : 'good'
+        }
+
+api.add_resource(Register, "/register/<string:email>/<string:username>/<string:password>/<string:confpassword>")
+
+class Login(Resource):
+    def post(self, username, password):
+        print(username)
+        print(password)
+        return {
+            'status' : 'good'
+        }
+
+api.add_resource(Login, "/login/<string:username>/<string:password>")
+
 if __name__ == "__main__":
     app.run(debug=True)
